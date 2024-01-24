@@ -1,0 +1,19 @@
+replicas: 1
+rootUser: rootuser
+rootPassword: rootpass123
+
+mode: standalone
+
+buckets:
+  # bucket to store dagsters runtime data
+  - name : dagster-data 
+    policy: none
+    purge : false 
+  # bucket to store files for 'project-example'
+  - name : project-example-data
+    policy: none
+    purge : false 
+    
+resources:
+  requests:
+    memory: 120m
