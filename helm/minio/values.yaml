@@ -10,7 +10,7 @@ buckets:
     policy: none
     purge : false 
   # bucket to store files for 'project-example'
-  - name : project-example-data
+  - name : ingestion-data
     policy: none
     purge : false 
     

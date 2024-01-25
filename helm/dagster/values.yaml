@@ -51,9 +51,8 @@ dagit:
   workspace:
     enabled: false
     servers:
-      - host: "project-example"
+      - host: "rss-ingestion"
         port: 3030
-
   # Deploy a separate instance of Dagit in --read-only mode (can't launch runs, disable schedules, etc.)
   enableReadOnly: false
 
@@ -216,17 +215,20 @@ dagster-user-deployments:
 
   # List of unique deployments
   deployments:
-    - name: "project-example"
+    - name: "rss-ingestion"
       image:
-        repository: "project-example"
+        repository: "rss_ingestion"
         tag: latest
         pullPolicy: IfNotPresent
       dagsterApiGrpcArgs:
-         - "--python-file"
-         - "/project-example/repo.py"
+         - "--working-directory"
+         - "/rss_ingestion"
+         - "--module-name"
+         - "rss_ingestion"
       port: 3030
       env: 
         AWS_ENDPOINT_URL : "http://minio.minio.svc.cluster.local:9000"
+        DAGSTER_DEPLOYMENT : "production"
       envConfigMaps: []
       envSecrets:
           - name: dagster-aws-access-key-id
@@ -245,18 +247,6 @@ dagster-user-deployments:
         timeoutSeconds: 3
         successThreshold: 1
         failureThreshold: 3
-
-      startupProbe:
-        enabled: true
-        initialDelaySeconds: 0
-        periodSeconds: 10
-        timeoutSeconds: 3
-        successThreshold: 1
-        failureThreshold: 3
-
-      service:
-        annotations: {}
-
 ####################################################################################################
 # Pipeline Run: Configuration for user code containers.
 #
