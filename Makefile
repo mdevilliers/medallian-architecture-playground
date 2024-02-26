@@ -25,8 +25,6 @@ helm_init:
 .PHONY: install_infra
 install_infra: k8s_connect
 	# install minio as we'd like an S3 like backend
-	# configure standalone and a small amount of memory
-	# create a dagster-data bucket to use for storing our data
 	helm install --namespace minio --create-namespace --values ./helm/minio/values.yaml minio minio/minio
 	# install dagster
 	helm install --namespace dagster --create-namespace --values ./helm/dagster/values.yaml --version $(DAGSTER_VERSION) dagster dagster/dagster

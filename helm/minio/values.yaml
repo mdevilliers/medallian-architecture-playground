@@ -16,4 +16,4 @@ buckets:
     
 resources:
   requests:
-    memory: 120m
+    memory: 120M

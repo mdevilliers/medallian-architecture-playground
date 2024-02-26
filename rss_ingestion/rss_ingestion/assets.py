@@ -9,11 +9,13 @@ from datetime import datetime
 
 """
 Download the RSS feed at https://bills.parliament.uk/rss/allbills.rss
-Locally 
-  data/parliament/bills/rss_feed/2024-01-25-15:00
-S3
-  Path : dagster/parliament/bills/rss_feed/2024-01-25-14:00
-  URI s3://ingestion-data/dagster/parliament/bills/rss_feed
+Runs every hour and will download RSS files with duplicated data.
+Stored
+    Locally 
+        data/parliament/bills/rss_feed/2024-01-25-15:00
+    S3
+        Path : dagster/parliament/bills/rss_feed/2024-01-25-14:00
+    URI s3://ingestion-data/dagster/parliament/bills/rss_feed
 """
 
 hourly_partitions = HourlyPartitionsDefinition(start_date=datetime(2024, 1, 25))

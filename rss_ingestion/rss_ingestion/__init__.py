@@ -6,9 +6,13 @@ from dagster import (
     define_asset_job,
     ScheduleDefinition,
     Definitions,
-    AssetSelection
+    AssetSelection,
+    HourlyPartitionsDefinition
 )
-from rss_ingestion.assets import rss_feed
+from rss_ingestion.assets import (
+    rss_feed,
+    hourly_partitions
+)
 
 resource_defs = {
     "local": {
@@ -22,7 +26,7 @@ resource_defs = {
 }
 deployment_name = os.getenv("DAGSTER_DEPLOYMENT", "local")
 
-rss_ingestion_job = define_asset_job("rss_ingestion_job", selection=AssetSelection.all())
+rss_ingestion_job = define_asset_job("rss_ingestion_job", selection=[rss_feed],   partitions_def=hourly_partitions)
 
 rss_schedule = ScheduleDefinition(
     job=rss_ingestion_job,
